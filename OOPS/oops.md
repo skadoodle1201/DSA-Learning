@@ -1,4 +1,4 @@
-## Object Oriented
+## Object Oriented Programming
 
 1. Classes have few hidden functions (default everytime this will be added to your class)
 
@@ -71,4 +71,29 @@
 
        c2 = c1; // This will call the copy assignment operator function
      }
+     ```
+
+   - Desturctor - To Destroy the Object once the use is finished
+
+     - Delete the objects of a class.\
+     - Delete will be in lifo. (last in first Out)
+     - Delete keyword used in dynamic memory allocation will call the destructor.
+
+     ```
+       class Car {
+         public :
+           char name[100];
+           int price;
+
+           ~Car(){
+             cout << "Deleteing" << name;
+           }
+       }
+
+       int main () {
+         car c1 ("BMW",100);
+         car c2;
+
+         c2 = c1; // This will call the copy assignment operator function
+       }
      ```
