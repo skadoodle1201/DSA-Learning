@@ -97,3 +97,64 @@
          c2 = c1; // This will call the copy assignment operator function
        }
      ```
+
+2. By Default All the Default Constructor Uses Shallow Copy.
+  - We have to do the deep copy manually
+
+3. Operator Overloading
+ - We Can How Operators works in OOPs with object.
+ - {returnType} operator{operatorToOverload} () {}
+ - ```
+       class Car {
+         public :
+           char name[100];
+           int price;
+
+
+           \\This is Overloading operator += for objects of Car 
+            void operator+= (Car &X) {
+              price += X.price;
+              strcat(name,X.name);
+            }
+
+           ~Car(){
+             cout << "Deleteing" << name;
+           }
+       }
+
+       int main () {
+         car c1 ("BMW",100);
+         car c2 ("MARUTI",200);
+
+         c2 += c1;
+         c2.print();
+       }
+    ```
+    ##### Output: 
+    ```
+      MARUTIBMW,300
+    ```
+
+4. Access Specifiers
+  - Specifices How We can access which members we can access.
+  - To access these things we can create getter and setter.
+  - Use for getter and setter is that we can have a lot more control over the private values and have validations.
+  ```
+    class Car {
+      private: 
+        int price;
+      
+      public: 
+        char name[100];
+
+      //Setter
+      void setPrice(p){
+        price = p;
+      }
+
+      //Getter
+      void getPrice(){
+        return price ;
+      }
+    }
+  ```
