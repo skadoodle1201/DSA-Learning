@@ -158,3 +158,53 @@
       }
     }
   ```
+
+5. Using Constants in OOPs
+  - We can declare constants in any access specifier.
+  - We cannnot intialize the values while declaring them as that is just a blueprint.
+  - We need to intialize the constants while creating the constructors.
+  ```
+  class Car {
+        private :
+         const int tyres ;
+
+          Car (char *n,int p) : tyers(4) {
+            strcpy(name,n);
+            price = p;
+          }
+          public :
+            char name[100];
+            int price;
+        }
+
+        int main () {
+          car c1 ("BMW",100);
+        }
+  ```
+
+6. Using Static Variables
+  - Static variables are basically that are associated to the class not it's object
+    -> If there is a car class we need a counter how many cars are added we need to add counter and store it globally to that specific class not the object.
+  - 
+  ```
+    class Car {
+        private :
+          const int tyres ;
+          static int counter;
+
+          Car (char *n,int p) : tyers(4) {
+            strcpy(name,n);
+            counter++;
+            price = p;
+          }
+          public :
+            char name[100];
+            int price;
+    }
+
+    int Car::counter = 0; //  This is how we initalize this variable.
+    int main () {
+      car c1 ("BMW",100);
+      cout << Car::counter<< c1.counter; // This is how we can access the static variable
+    }
+  ```
