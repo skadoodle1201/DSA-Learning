@@ -1,6 +1,12 @@
 #include <iostream>
 using namespace std;
 
+/*
+ *  Finding Mid Of Linked List Without finding length or anything
+ *  Assume Two Racers are running and one runs 2x the other so when the runner i.e faster will reach end
+ *  Slower One will Reach the mid
+ */
+
 class node {
    public:
     int data;
@@ -118,44 +124,88 @@ void deleteAtNPos(node *&head, node *&tail, int pos) {
     delete toDelete;
 }
 
-node *searchInLL(node *head, int key) {
-    if (!head) return NULL;
-    if (head->data == key) {
-        return head;
+node *mergeSortedLL(node *a, node *b) {
+    if (a == NULL) return b;
+    if (b == NULL) return a;
+
+    // recursive Case
+    node *nh;
+    if (a->data < b->data) {
+        nh = a;
+        nh->next = mergeSortedLL(a->next, b);
+    } else {
+        nh = b;
+        nh->next = mergeSortedLL(a, b->next);
     }
-    return searchInLL(head->next, key);
+    return nh;
 }
 
+node *findMiddle(node *head) {
+    if (!head or !head->next) return head;
+
+    node *slow = head;
+
+    // We need to start from +1 to get accurate answer otherwise we need to modify the condtion
+    node *fast = head->next;
+
+    while (fast and fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    return slow;
+}
+
+node *sortLinkedList(node *head) {
+    if (head == NULL or head->next == NULL) {
+        return head;
+    }
+
+    // Divide The List
+    node *a = head;
+    node *mid = findMiddle(head);
+    node *b = mid->next;
+    mid->next = NULL;
+    // Sort
+    a = sortLinkedList(a);
+    b = sortLinkedList(b);
+
+    // merge
+    node *nh = mergeSortedLL(a, b);
+    return nh;
+}
 int main() {
     node *head = NULL, *tail = NULL;
+    node *head2 = NULL, *tail2 = NULL;
+    node *head3 = NULL, *tail3 = NULL;
 
-    insertAtStart(head, tail, 10);
+    insertAtStart(head3, tail3, 10);
+
+    insertAtEnd(head3, tail3, 1);
+    insertAtEnd(head3, tail3, 2);
+    insertAtEnd(head3, tail3, 3);
+    insertAtEnd(head3, tail3, 4);
+    insertAtEnd(head3, tail3, 5);
+    insertAtEnd(head3, tail3, 6);
+
+    insertAtEnd(head3, tail3, 7);
+    insertAtStart(head3, tail3, 8);
+    insertAtStart(head3, tail3, 9);
 
     insertAtEnd(head, tail, 1);
     insertAtEnd(head, tail, 2);
-    insertAtEnd(head, tail, 3);
-    insertAtEnd(head, tail, 4);
-    insertAtEnd(head, tail, 5);
-    insertAtEnd(head, tail, 6);
+    insertAtEnd(head2, tail2, 2);
+    insertAtEnd(head2, tail2, 4);
+    insertAtEnd(head2, tail2, 5);
 
-    insertAtStart(head, tail, 7);
-    insertAtStart(head, tail, 8);
-    insertAtStart(head, tail, 9);
-    printLL(head);
-    deleteFromStart(head, tail);
-    deleteFromEnd(head, tail);
-    cout << "After Deleteing :: \n";
-    printLL(head);
-    insertInNpos(head, tail, 20, 3);
-    cout << "Before Deleteing At N Pos:: \n";
-    printLL(head);
-    deleteAtNPos(head, tail, 4);
     printLL(head);
 
-    insertInNpos(head, tail, 21, 23);
-    insertInNpos(head, tail, -1, 0);
-    printLL(head);
+    printLL(head2);
+    node *newHead = mergeSortedLL(head, head2);
+    cout << "SORTED MERGE :: \n";
+    printLL(newHead);
 
-    cout << "Search In Linked List Found :: " << searchInLL(head, 8)->data << endl;
+    node *sortedHead = sortLinkedList(head3);
+    printLL(sortedHead);
     return 0;
 }

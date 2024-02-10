@@ -126,6 +126,32 @@ node *searchInLL(node *head, int key) {
     return searchInLL(head->next, key);
 }
 
+void reverseLL(node *&head, node *&tail) {
+    node *curr = head;
+    node *prev = NULL;
+    node *next = NULL;
+    while (curr != NULL) {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+
+    swap(head, tail);
+}
+
+void reverseLLwithRecursion(node *&head, node *&tail, node *curr, node *prev) {
+    if (curr == NULL) {
+        swap(head, tail);
+        return;
+    }
+
+    node *next = curr->next;
+    curr->next = prev;
+
+    reverseLLwithRecursion(head, tail, next, curr);
+}
+
 int main() {
     node *head = NULL, *tail = NULL;
 
@@ -142,20 +168,13 @@ int main() {
     insertAtStart(head, tail, 8);
     insertAtStart(head, tail, 9);
     printLL(head);
-    deleteFromStart(head, tail);
-    deleteFromEnd(head, tail);
-    cout << "After Deleteing :: \n";
-    printLL(head);
-    insertInNpos(head, tail, 20, 3);
-    cout << "Before Deleteing At N Pos:: \n";
-    printLL(head);
-    deleteAtNPos(head, tail, 4);
-    printLL(head);
-
-    insertInNpos(head, tail, 21, 23);
-    insertInNpos(head, tail, -1, 0);
-    printLL(head);
 
     cout << "Search In Linked List Found :: " << searchInLL(head, 8)->data << endl;
+
+    reverseLL(head, tail);
+    printLL(head);
+    reverseLLwithRecursion(head, tail, head, NULL);
+    printLL(head);
+
     return 0;
 }
