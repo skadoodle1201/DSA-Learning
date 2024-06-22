@@ -54,11 +54,11 @@ void preOder(node *root, map<int, vector<int>> &m, int hd) {
 }
 
 void printVertical(node *root) {
-  map<int, vector<int> > m;
+  map<int, vector<int>> m;
   int hd = 0;
   preOder(root, m, hd);
 
-  map<int, vector<int> >::iterator it;
+  map<int, vector<int>>::iterator it;
   for (it = m.begin(); it != m.end(); it++) {
     for (int i = 0; i < it->second.size(); ++i)
       cout << it->second[i] << " ";
@@ -71,4 +71,35 @@ int main() {
   node *root = createBTree();
   printVertical(root);
   return 0;
+}
+
+node *levelOrderTraversalInp() {
+    queue<node *> q;
+    node *root = NULL;
+    int data;
+    cin >> data;
+    if (data == -1) {
+        return NULL;
+    }
+    root = new node(data);
+    q.push(root);
+    while (!q.empty()) {
+        node *n = q.front();
+        q.pop();
+
+        int l, r;
+        cin >> l >> r;
+
+        if (l != -1) {
+            n->left = new node(l);
+            q.push(n->left);
+        }
+
+        if (r != -1) {
+            n->right = new node(r);
+            q.push(n->right);
+        }
+    }
+
+    return root;
 }

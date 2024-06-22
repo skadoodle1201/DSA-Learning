@@ -45,6 +45,8 @@ node *createTree() {
   }
   return root;
 }
+
+
 void printRight(node *root) {
   queue<node *> q;
   q.push(root);
